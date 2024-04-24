@@ -39,48 +39,31 @@ public class Challeng2 extends JFrame implements ActionListener {
             helloLabel.setLocation(150, 150);
             helloLabel.setForeground(Color.white);
             mainPanel.add(helloLabel);
-            JLabel l = new JLabel("nothing entered");
-            l.setSize(100, 100);
-            l.setLocation(200, 200);
-            l.setForeground(Color.white);
-            mainPanel.add(l);
 
             // Create text field
-            JTextField t = new JTextField("enter the GitHub reposetory URL",16);
-            t.setSize(200, 30); // Set the size of the text field
-            t.setLocation(50, 50); // Set the location of the text field within the panel
-            mainPanel.add(t);
+            JTextField repoPathTextField = new JTextField("enter the GitHub reposetory URL",16);
+            repoPathTextField.setSize(200, 30); // Set the size of the text field
+            repoPathTextField.setLocation(50, 50); // Set the location of the text field within the panel
+            mainPanel.add(repoPathTextField);
 
             // create button
-            JButton submitButton = new JButton("Submit");
-            submitButton.setSize(100, 50);
-            submitButton.setLocation(50, 200);
-            JButton fortextfield = new JButton("submit");
+            JButton fortextfield = new JButton("Submit");
             fortextfield.setSize(100, 50);
             fortextfield.setLocation(250, 50);
 
             // when button is clicked, run the code inside the actionPerformed method
-            submitButton.addActionListener(new ActionListener() {
+            fortextfield.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("You clicked the button!");
+                    String repoPath = repoPathTextField.getText();
                     GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
                     String gitInit = gitSubprocessClient.gitInit();
                     String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", "https://github.com/CSC109/GitSubprocessClient.git");
                     helloLabel.setText("Goodbye!!");
                 }
             });
-            fortextfield.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("You clicked the button!");
-                    String textFieldValue = repoPath.getText();
 
-                    //Contine from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    helloLabel.setText("Goodbye!!");
-                }
-            });
-            mainPanel.add(submitButton);
             mainPanel.add(fortextfield);
             // add mainPanel to JFrame
             frame.setContentPane(mainPanel);
