@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Connor N\\Downloads\\GitHubApiClient-v0.0.7.jar",
+        "c:\\Users\\Connor N\\Downloads\\GitSubprocessClient-v0.0.12.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+}
