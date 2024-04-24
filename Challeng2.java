@@ -47,8 +47,8 @@ public class Challeng2 extends JFrame implements ActionListener {
             mainPanel.add(repoPathTextField);
 
             // create button
-            JButton fortextfield = new JButton("Submit");
-            fortextfield.setSize(100, 50);
+            JButton fortextfield = new JButton("Create Repository");
+            fortextfield.setSize(150, 50);
             fortextfield.setLocation(250, 50);
 
             
@@ -58,11 +58,14 @@ public class Challeng2 extends JFrame implements ActionListener {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("You clicked the button!");
+                    helloLabel.setText("Goodbye!!");
                     String repoPath = repoPathTextField.getText();
+                    //must enter an atual file for the Text Field
                     GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
                     String gitInit = gitSubprocessClient.gitInit();
-                    String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", "https://github.com/CSC109/GitSubprocessClient.git");
-                    helloLabel.setText("Goodbye!!");
+                    System.out.println(gitInit);
+                    String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
+                    System.out.println(gitRemoteAdd);
                 }
             });
 
