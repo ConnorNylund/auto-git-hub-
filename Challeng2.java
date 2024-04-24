@@ -51,6 +51,8 @@ public class Challeng2 extends JFrame implements ActionListener {
             fortextfield.setSize(100, 50);
             fortextfield.setLocation(250, 50);
 
+            
+
             // when button is clicked, run the code inside the actionPerformed method
             fortextfield.addActionListener(new ActionListener() {
                 @Override
