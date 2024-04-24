@@ -47,8 +47,8 @@ public class Challeng2 extends JFrame implements ActionListener {
             mainPanel.add(repoPathTextField);
 
             // create button
-            JButton fortextfield = new JButton("Submit");
-            fortextfield.setSize(100, 50);
+            JButton fortextfield = new JButton("Create Repository");
+            fortextfield.setSize(150, 50);
             fortextfield.setLocation(250, 50);
 
             // when button is clicked, run the code inside the actionPerformed method
