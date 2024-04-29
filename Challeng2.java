@@ -64,6 +64,16 @@ public class Challeng2 extends JFrame implements ActionListener {
                     System.out.println(gitInit);
                     String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
                     System.out.println(gitRemoteAdd);
+
+                    // Add git ignore file here 
+
+                    // Add READ.me file 
+
+                    // Create an initial commit in the Git repo
+
+                    // Create a GitHub repo mirroring the Git repo on the developer’s computer
+                    // The GitHub repo’s name, description and visibility (private or public) should be able to be set by the user
+
                 }
             });
 
