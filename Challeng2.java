@@ -71,6 +71,31 @@ public class Challeng2 extends JFrame implements ActionListener {
         mainPanel.add(fortextfield);
         // add mainPanel to JFrame
         frame.setContentPane(mainPanel);
+            // when button is clicked, run the code inside the actionPerformed method
+            fortextfield.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("You clicked the button!");
+                    helloLabel.setText("Goodbye!!");
+                    String repoPath = repoPathTextField.getText();
+                    //must enter an atual file for the Text Field
+                    GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
+                    String gitInit = gitSubprocessClient.gitInit();
+                    System.out.println(gitInit);
+                    String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
+                    System.out.println(gitRemoteAdd);
+
+                    // Add git ignore file here 
+
+                    // Add READ.me file 
+
+                    // Create an initial commit in the Git repo
+
+                    // Create a GitHub repo mirroring the Git repo on the developer’s computer
+                    // The GitHub repo’s name, description and visibility (private or public) should be able to be set by the user
+
+                }
+            });
 
         // show JFrame
         frame.setVisible(true);
