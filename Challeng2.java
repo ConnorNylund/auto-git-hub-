@@ -48,26 +48,6 @@ public class Challeng2 extends JFrame implements ActionListener {
         fortextfield.setSize(150, 50);
         fortextfield.setLocation(250, 50);
 
-        // when button is clicked, run the code inside the actionPerformed method
-        fortextfield.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("You clicked the button!");
-                helloLabel.setText("Goodbye!!");
-                String repoPath = repoPathTextField.getText();
-                repoPath = repoPath.replaceAll(" ", "\\\\ ");
-                //must enter an actual file for the Text Field
-                GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
-                String gitInit = gitSubprocessClient.gitInit();
-                System.out.println(gitInit);
-                String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
-                System.out.println(gitRemoteAdd);
-
-                //GitIgnore method call 
-                gitIgnore(repoPath);
-            }
-        });
-
         mainPanel.add(fortextfield);
         // add mainPanel to JFrame
         frame.setContentPane(mainPanel);
@@ -85,7 +65,8 @@ public class Challeng2 extends JFrame implements ActionListener {
                     String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
                     System.out.println(gitRemoteAdd);
 
-                    // Add git ignore file here 
+                    //GitIgnore method call 
+                    gitIgnore(repoPath);
 
                     // Add READ.me file 
 
