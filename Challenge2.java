@@ -16,9 +16,8 @@ import git.tools.client.GitSubprocessClient;
 import github.tools.client.GitHubApiClient;
 import github.tools.client.RequestParams;
 import github.tools.responseObjects.CreateRepoResponse;
-import github.tools.responseObjects.GetRepoInfoResponse;
 
-public class Challeng2 extends JFrame implements ActionListener {
+public class Challenge2 extends JFrame implements ActionListener {
     public static void main(String[] args) {
 
         // create JFrame
@@ -28,9 +27,6 @@ public class Challeng2 extends JFrame implements ActionListener {
                                                                        // button, the entire program stops
         frame.setLocationRelativeTo(null); // make JFrame open center screen
         frame.setResizable(false);
-
-        // Create Challeng2 class
-        // Challeng2 te = new Challeng2();
 
         // create main panel (canvas)
         JPanel mainPanel = new JPanel();
@@ -45,7 +41,7 @@ public class Challeng2 extends JFrame implements ActionListener {
         mainPanel.add(helloLabel);
 
         // Create text field
-        JTextField repoPathTextField = new JTextField("enter the GitHub reposetory URL", 16);
+        JTextField repoPathTextField = new JTextField("enter the GitHub repository URL", 16);
         repoPathTextField.setSize(200, 30); // Set the size of the text field
         repoPathTextField.setLocation(50, 50); // Set the location of the text field within the panel
         mainPanel.add(repoPathTextField);
@@ -89,7 +85,7 @@ public class Challeng2 extends JFrame implements ActionListener {
         userName.setVisible(false);
         mainPanel.add(userName);
 
-        JTextField APIToken = new JTextField("enter your gitHub API access token", 16);
+        JTextField APIToken = new JTextField("enter your GitHub API access token", 16);
         APIToken.setSize(200, 30); // Set the size of the text field
         APIToken.setLocation(50, 350); // Set the location of the text field within the panel
         APIToken.setVisible(false);
@@ -110,7 +106,7 @@ public class Challeng2 extends JFrame implements ActionListener {
                 System.out.println("You clicked the button!");
                 helloLabel.setText("Goodbye!!");
                 String repoPath = repoPathTextField.getText();
-                // must enter an atual file for the Text Field
+                // must enter an actual file for the Text Field
                 GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
                 String gitInit = gitSubprocessClient.gitInit();
                 System.out.println(gitInit);
@@ -121,9 +117,8 @@ public class Challeng2 extends JFrame implements ActionListener {
                 gitIgnore(repoPath);
 
                 // Add READ.me file
-
-                // Create an initial commit in the Git repo
-
+                String projectName = repoName.getText();
+                createReadMe(repoPath, projectName);
             }
         });
 
@@ -176,6 +171,19 @@ public class Challeng2 extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("There was a problem creating the .gitignore file.");
+        }
+    }
+
+    //Method to create README.md file
+    private static void createReadMe(String projectPath, String projectName) {
+        try {
+            FileWriter readmeWriter = new FileWriter(projectPath + File.separator + "README.md");
+            readmeWriter.write("# " + projectName + "\n\n");
+            readmeWriter.close();
+            System.out.println("The README.md file was created.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("There was a problem creating the README.md file.");
         }
     }
 
