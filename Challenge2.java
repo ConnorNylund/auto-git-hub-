@@ -111,6 +111,13 @@ public class Challenge2 extends JFrame implements ActionListener {
                 System.out.println(gitInit);
                 String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
                 System.out.println(gitRemoteAdd);
+                String gitAddAll = gitSubprocessClient.gitAddAll();
+                System.out.println(gitAddAll);
+                String commitMessage = "Inital commit";
+                String commit = gitSubprocessClient.gitCommit(commitMessage);
+                System.out.println(commit);
+
+
 
                 // GitIgnore method call
                 gitIgnore(repoPath);
