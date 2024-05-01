@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -18,6 +19,7 @@ import github.tools.client.RequestParams;
 import github.tools.responseObjects.CreateRepoResponse;
 
 public class Challenge2 extends JFrame implements ActionListener {
+    private static GitSubprocessClient gitSubprocessClient;
     public static void main(String[] args) {
 
         // create JFrame
@@ -106,7 +108,7 @@ public class Challenge2 extends JFrame implements ActionListener {
                 helloLabel.setText("Goodbye!!");
                 String repoPath = repoPathTextField.getText();
                 // must enter an actual file for the Text Field
-                GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
+                 gitSubprocessClient = new GitSubprocessClient(repoPath);
                 String gitInit = gitSubprocessClient.gitInit();
                 System.out.println(gitInit);
                 String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
@@ -147,6 +149,21 @@ public class Challenge2 extends JFrame implements ActionListener {
                 //Creates the repo based on the name, description, and visibility
                 CreateRepoResponse createRepo = gitHubApiClient.createRepo(requestParams);
                 System.out.println(createRepo);
+
+                  // Extracting repository URL from the response
+        String repoUrl = createRepo.getUrl();
+        System.out.println("Repository URL: " + repoUrl);
+
+        // Commit and Push to GitHub
+        String commitMessage = "Initial commit";
+            gitSubprocessClient.gitAddFile(".");
+            gitSubprocessClient.gitCommit(commitMessage);
+            gitSubprocessClient.gitPush("master");
+            System.out.println("Initial commit pushed to GitHub successfully.");
+
+        // Display the URL to the user
+        // Here you can use any method to display the URL to the user, such as JOptionPane
+        JOptionPane.showMessageDialog(frame, "Your GitHub repository has been created.\nURL: " + repoUrl);
             }
         });
 
