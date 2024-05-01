@@ -54,7 +54,6 @@ public class Challeng2 extends JFrame implements ActionListener {
         JButton fortextfield = new JButton("Create Repository");
         fortextfield.setSize(150, 50);
         fortextfield.setLocation(250, 50);
-
         mainPanel.add(fortextfield);
 
         //Creates next buttons
