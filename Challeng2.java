@@ -1,29 +1,36 @@
-import java.awt.event.*;
-import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import git.tools.client.GitSubprocessClient;
-import github.tools.client.GitHubApiClient;
-import github.tools.responseObjects.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Challeng2 extends JFrame implements ActionListener {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
-    public static void main(String[] args) { 
-        
+import git.tools.client.GitSubprocessClient;
+import github.tools.client.GitHubApiClient;
+import github.tools.client.RequestParams;
+import github.tools.responseObjects.CreateRepoResponse;
+import github.tools.responseObjects.GetRepoInfoResponse;
+
+public class Challeng2 extends JFrame implements ActionListener {
+    public static void main(String[] args) {
+
         // create JFrame
         JFrame frame = new JFrame("Swing Practice");
         frame.setSize(1000, 800);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // make it so when JFrame is closed via the x button, the entire program stops
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // make it so when JFrame is closed via the x
+                                                                       // button, the entire program stops
         frame.setLocationRelativeTo(null); // make JFrame open center screen
         frame.setResizable(false);
-        
+
         // Create Challeng2 class
-        //Challeng2 te = new Challeng2();
+        // Challeng2 te = new Challeng2();
 
         // create main panel (canvas)
         JPanel mainPanel = new JPanel();
@@ -33,12 +40,12 @@ public class Challeng2 extends JFrame implements ActionListener {
         // create label
         JLabel helloLabel = new JLabel("Hello!!!");
         helloLabel.setSize(100, 100);
-        helloLabel.setLocation(150, 150);
+        helloLabel.setLocation(350, 150);
         helloLabel.setForeground(Color.white);
         mainPanel.add(helloLabel);
 
         // Create text field
-        JTextField repoPathTextField = new JTextField("enter the GitHub reposetory URL",16);
+        JTextField repoPathTextField = new JTextField("enter the GitHub reposetory URL", 16);
         repoPathTextField.setSize(200, 30); // Set the size of the text field
         repoPathTextField.setLocation(50, 50); // Set the location of the text field within the panel
         mainPanel.add(repoPathTextField);
@@ -49,55 +56,118 @@ public class Challeng2 extends JFrame implements ActionListener {
         fortextfield.setLocation(250, 50);
 
         mainPanel.add(fortextfield);
+
+        //Creates next buttons
+        JButton nextButton = new JButton("next");
+        nextButton.setSize(150, 50);
+        nextButton.setLocation(250, 110);
+        nextButton.setVisible(false);
+        mainPanel.add(nextButton);
+
+        // Creates text fields for repo name, description, visibility, user name, and git API Token
+        JTextField repoName = new JTextField("enter the repo name", 16);
+        repoName.setSize(200, 30); // Set the size of the text field
+        repoName.setLocation(50, 110); // Set the location of the text field within the panel
+        repoName.setVisible(false);
+        mainPanel.add(repoName);
+
+        JTextField repoDescription = new JTextField("enter the repo description", 16);
+        repoDescription.setSize(200, 30); // Set the size of the text field
+        repoDescription.setLocation(50, 170); // Set the location of the text field within the panel
+        repoDescription.setVisible(false);
+        mainPanel.add(repoDescription);
+
+        JTextField repoVisibility = new JTextField("enter the repo visibility(public/private)", 16);
+        repoVisibility.setSize(200, 30); // Set the size of the text field
+        repoVisibility.setLocation(50, 230); // Set the location of the text field within the panel
+        repoVisibility.setVisible(false);
+        mainPanel.add(repoVisibility);
+
+        JTextField userName = new JTextField("enter your user name", 16);
+        userName.setSize(200, 30); // Set the size of the text field
+        userName.setLocation(50, 290); // Set the location of the text field within the panel
+        userName.setVisible(false);
+        mainPanel.add(userName);
+
+        JTextField APIToken = new JTextField("enter your gitHub API access token", 16);
+        APIToken.setSize(200, 30); // Set the size of the text field
+        APIToken.setLocation(50, 350); // Set the location of the text field within the panel
+        APIToken.setVisible(false);
+        mainPanel.add(APIToken);
+
         // add mainPanel to JFrame
         frame.setContentPane(mainPanel);
-            // when button is clicked, run the code inside the actionPerformed method
-            fortextfield.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("You clicked the button!");
-                    helloLabel.setText("Goodbye!!");
-                    String repoPath = repoPathTextField.getText();
-                    //must enter an atual file for the Text Field
-                    GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
-                    String gitInit = gitSubprocessClient.gitInit();
-                    System.out.println(gitInit);
-                    String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
-                    System.out.println(gitRemoteAdd);
+        // when button is clicked, run the code inside the actionPerformed method
+        fortextfield.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nextButton.setVisible(true);
+                repoName.setVisible(true);
+                repoDescription.setVisible(true);
+                repoVisibility.setVisible(true);
+                userName.setVisible(true);
+                APIToken.setVisible(true);
+                System.out.println("You clicked the button!");
+                helloLabel.setText("Goodbye!!");
+                String repoPath = repoPathTextField.getText();
+                // must enter an atual file for the Text Field
+                GitSubprocessClient gitSubprocessClient = new GitSubprocessClient(repoPath);
+                String gitInit = gitSubprocessClient.gitInit();
+                System.out.println(gitInit);
+                String gitRemoteAdd = gitSubprocessClient.gitRemoteAdd("origin", repoPath);
+                System.out.println(gitRemoteAdd);
 
-                    //GitIgnore method call 
-                    gitIgnore(repoPath);
+                // GitIgnore method call
+                gitIgnore(repoPath);
 
-                    // Add READ.me file 
+                // Add READ.me file
 
-                    // Create an initial commit in the Git repo
+                // Create an initial commit in the Git repo
 
-                    // Create a GitHub repo mirroring the Git repo on the developer’s computer
-                    // The GitHub repo’s name, description and visibility (private or public) should be able to be set by the user
+            }
+        });
 
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Create a GitHub repo mirroring the Git repo on the developer’s computer
+                // The GitHub repo’s name, description and visibility (private or public) should
+                // be able to be set by the user
+
+                GitHubApiClient gitHubApiClient = new GitHubApiClient(userName.getText(), APIToken.getText());
+                RequestParams requestParams = new RequestParams();
+                requestParams.addParam("name", repoName.getText());
+                requestParams.addParam("description", repoDescription.getText());
+                if (repoVisibility.getText().equals("private")) {
+                    requestParams.addParam("private", true);
+                } else {
+                    requestParams.addParam("private", false);
                 }
-            });
+                //Creates the repo based on the name, description, and visibility
+                CreateRepoResponse createRepo = gitHubApiClient.createRepo(requestParams);
+                System.out.println(createRepo);
+            }
+        });
 
         // show JFrame
         frame.setVisible(true);
     }
 
-    //Creating git.ignore file method
+    // Creating git.ignore file method
     private static void gitIgnore(String projectPath) {
         try {
-            //Common Files to Ignore
-            String ignoreContent = 
-            "*.class\n"+
-            ".idea/\n"+
-            "*.log\n"+
-            "*.ctxt\n"+
-            "*.jar\n"+
-            "*.war\n"+
-            "*.nar\n"+
-            "*.ear\n"+
-            "*.zip\n"+
-            "*.tar.gz\n"+
-            "*.rar\n";
+            // Common Files to Ignore
+            String ignoreContent = "*.class\n" +
+                    ".idea/\n" +
+                    "*.log\n" +
+                    "*.ctxt\n" +
+                    "*.jar\n" +
+                    "*.war\n" +
+                    "*.nar\n" +
+                    "*.ear\n" +
+                    "*.zip\n" +
+                    "*.tar.gz\n" +
+                    "*.rar\n";
 
             FileWriter ignoreWriter = new FileWriter(projectPath + File.separator + ".gitignore");
             ignoreWriter.write(ignoreContent);
